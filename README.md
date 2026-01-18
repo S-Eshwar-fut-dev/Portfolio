@@ -2,7 +2,8 @@
 
 A high-performance, immersive 3D portfolio experience engineered with **Next.js 15**, **React Three Fiber**, and **Tailwind CSS v4**.
 
-![Portfolio Preview](/public/assets/projects/placeholder.jpg)
+<img width="1919" height="1015" alt="image" src="https://github.com/user-attachments/assets/8901a78f-9380-4aea-83f2-0808d1624ce4" />
+
 
 ## 🌌 The Core Engine
 
