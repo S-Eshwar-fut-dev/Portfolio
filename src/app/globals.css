@@ -1,0 +1,114 @@
+@import "tailwindcss";
+/* stylelint-disable */
+
+@theme {
+  --color-abyss: #0a0e1a;
+  --color-midnight: #0f172a;
+  --color-slate: #1e293b;
+  --color-blue-primary: #3b82f6;
+  --color-blue-light: #60a5fa;
+  --color-blue-dark: #1e40af;
+  --color-purple: #a78bfa;
+  --color-cyan: #06b6d4;
+  --color-white: #f8fafc;
+  --color-gray: #94a3b8;
+
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-jetbrains-mono);
+}
+
+:root {
+  --background: #000000;
+  --foreground: #ededed;
+
+  /* Neon Nebula Theme Colors */
+  --nebula-cyan: #00ffff;
+  --nebula-blue: #0080ff;
+  --nebula-white: #ffffff;
+  --space-black: #000000;
+  --midnight-blue: #0a1628;
+  --glow-cyan: rgba(0, 255, 255, 0.3);
+}
+
+body {
+  color: var(--foreground);
+  background: radial-gradient(ellipse at top,
+      var(--midnight-blue) 0%,
+      var(--space-black) 50%);
+  font-family: Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Glassmorphism utility */
+.glass-panel {
+  background: rgba(10, 22, 40, 0.3);
+  backdrop-filter: blur(16px) saturate(150%);
+  border: 1px solid rgba(0, 255, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 200, 255, 0.1);
+}
+
+/* Neon glow effect */
+.neon-glow {
+  text-shadow:
+    0 0 10px var(--glow-cyan),
+    0 0 20px var(--glow-cyan),
+    0 0 30px var(--glow-cyan);
+}
+
+/* Prevent canvas from blocking clicks */
+canvas {
+  pointer-events: none !important;
+}
+
+@layer utilities {
+  .glass-card {
+    background: rgba(15, 23, 42, 0.4);
+    backdrop-filter: blur(12px) saturate(180%);
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    border-radius: 24px;
+    box-shadow:
+      0 8px 32px rgba(0, 0, 0, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .glass-card:hover {
+    background: rgba(15, 23, 42, 0.6);
+    border-color: rgba(59, 130, 246, 0.5);
+    box-shadow:
+      0 16px 48px rgba(59, 130, 246, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    transform: translateY(-4px);
+  }
+
+  .gradient-text {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(to right, #c4b5fd, #818cf8, #f472b6);
+    /* Lighter for visibility on black */
+  }
+
+  .gradient-header {
+    @apply bg-clip-text text-transparent;
+    /* The user requested: Deep Midnight Purple (#1a0b2e) with Dark Indigo (#312e81) and a hint of Muted Pink (#831843) */
+    /* Since this is likely on a dark background, these colors are very dark. They might be better for the LIGHT background (Nebula Core)?
+         Or maybe the user wants a "Deep Purple" theme which implies these colors are used on LIGHTER backgrounds?
+         Or maybe they want the TEXT to be these colors?
+         "Universal Gradient: ... primary headers to use a darkened version ... Blend ..."
+         I will define a specific class for this. */
+    background-image: linear-gradient(to right, #8b5cf6, #312e81, #831843);
+  }
+
+  @keyframes gradient-shift {
+
+    0%,
+    100% {
+      background-position: 0% center;
+    }
+
+    50% {
+      background-position: 100% center;
+    }
+  }
+}
