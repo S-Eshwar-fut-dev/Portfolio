@@ -5,10 +5,11 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { projects } from '@/lib/constants'
 import ProjectCard from '@/components/ui/ProjectCard'
 import Image from 'next/image'
-import { X, ExternalLink, Github } from 'lucide-react'
+import { X, ExternalLink, Github, ChevronLeft, ChevronRight } from 'lucide-react'
 
 export default function Projects() {
     const [selectedProject, setSelectedProject] = useState<typeof projects[0] | null>(null)
+    const [currentImageIndex, setCurrentImageIndex] = useState(0)
 
     return (
         <section id="projects" className="relative py-32 min-h-screen">
@@ -28,24 +29,32 @@ export default function Projects() {
                     </p>
                 </motion.div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[minmax(350px,auto)]">
+                <div className="grid grid-cols-1 md:grid-cols-12 gap-6 auto-rows-[minmax(300px,auto)]">
                     {projects.map((project, index) => {
-                        // Bento Grid Logic
-                        // 0: Large Left (2x2)
-                        // 1: Medium Right Top (1x1)
-                        // 2: Medium Right Bottom (1x1)
-                        // 3: Medium Left Bottom (1x1)
-                        // 4: Large Right Bottom (2x1)
+                        // Custom Grid Logic - Row by Row Control
+                        // Row 1: Eoncord (Index 0) -> Full Width
+                        // Row 2: FraudShield (1) & ProjectEon (2) -> Half Width
+                        // Row 3: CMS (Index 3) -> Full Width
+                        // Row 4: Finsmart (4) & Twin Nebula (5) -> Half Width
+                        // Row 5: EON Automator (6) -> Full Width
 
                         let gridClass = ""
-                        if (index === 0) gridClass = "md:col-span-2 md:row-span-2 min-h-[600px]"
-                        else if (index === 4) gridClass = "md:col-span-2 min-h-[350px]"
-                        else gridClass = "md:col-span-1 min-h-[350px]"
+
+                        if (index === 0) gridClass = "md:col-span-12 min-h-[500px]" // Eoncord
+                        else if (index === 1 || index === 2) gridClass = "md:col-span-6 min-h-[400px]" // FraudShield & ProjectEon
+                        else if (index === 3) gridClass = "md:col-span-12 min-h-[500px]" // CMS
+                        else if (index === 4) gridClass = "md:col-span-5 min-h-[300px]" // Finsmart (Narrower)
+                        else if (index === 5) gridClass = "md:col-span-7 min-h-[300px]" // Twin Nebula (Wider)
+                        else if (index === 6) gridClass = "md:col-span-12 min-h-[500px]" // EON Automator
+                        else gridClass = "md:col-span-6 min-h-[400px]" // Fallback
 
                         return (
                             <div
                                 key={project.id}
-                                onClick={() => setSelectedProject(project)}
+                                onClick={() => {
+                                    setSelectedProject(project)
+                                    setCurrentImageIndex(0)
+                                }}
                                 className={`cursor-pointer ${gridClass}`}
                             >
                                 <ProjectCard
@@ -92,14 +101,54 @@ export default function Projects() {
                             </button>
 
                             {/* Image Section (Left/Top) */}
-                            <div className="relative w-full md:w-3/5 h-[300px] md:h-auto bg-black">
-                                <Image
-                                    src={selectedProject.image}
-                                    alt={selectedProject.title}
-                                    fill
-                                    className="object-cover opacity-90"
-                                />
-                                <div className="absolute inset-0 bg-gradient-to-t from-[#0a1628] to-transparent md:bg-gradient-to-r" />
+                            <div className="relative w-full md:w-3/5 h-[300px] md:h-auto bg-[#020617] group flex items-center justify-center p-4">
+                                <div className="relative w-full h-full">
+                                    <Image
+                                        src={selectedProject.images ? selectedProject.images[currentImageIndex] : selectedProject.image}
+                                        alt={selectedProject.title}
+                                        fill
+                                        className="object-contain transition-opacity duration-500"
+                                    />
+                                </div>
+
+                                {/* Carousel Controls */}
+                                {selectedProject.images && selectedProject.images.length > 1 && (
+                                    <>
+                                        <button
+                                            onClick={(e) => {
+                                                e.stopPropagation()
+                                                setCurrentImageIndex((prev) =>
+                                                    prev === 0 ? selectedProject.images!.length - 1 : prev - 1
+                                                )
+                                            }}
+                                            className="absolute left-4 top-1/2 -translate-y-1/2 p-2 bg-black/50 hover:bg-cyan-500/50 rounded-full text-white transition-all backdrop-blur-sm z-20"
+                                        >
+                                            <ChevronLeft size={24} />
+                                        </button>
+                                        <button
+                                            onClick={(e) => {
+                                                e.stopPropagation()
+                                                setCurrentImageIndex((prev) =>
+                                                    prev === selectedProject.images!.length - 1 ? 0 : prev + 1
+                                                )
+                                            }}
+                                            className="absolute right-4 top-1/2 -translate-y-1/2 p-2 bg-black/50 hover:bg-cyan-500/50 rounded-full text-white transition-all backdrop-blur-sm z-20"
+                                        >
+                                            <ChevronRight size={24} />
+                                        </button>
+
+                                        {/* Dots Indicator */}
+                                        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-20">
+                                            {selectedProject.images.map((_, idx) => (
+                                                <div
+                                                    key={idx}
+                                                    className={`w-2 h-2 rounded-full transition-colors ${idx === currentImageIndex ? 'bg-cyan-500' : 'bg-white/30'
+                                                        }`}
+                                                />
+                                            ))}
+                                        </div>
+                                    </>
+                                )}
                             </div>
 
                             {/* Info Section (Right/Bottom) */}
