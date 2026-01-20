@@ -9,7 +9,14 @@ export const projects = [
         github: 'https://github.com/S-Eshwar-fut-dev',
         demo: '#',
         video: '/assets/projects/eoncord-preview.mp4',
-        image: '/assets/projects/eoncord-thumb.jpg'
+        image: '/assets/projects/eoncord/chat-general.png',
+        images: [
+            '/assets/projects/eoncord/chat-general.png',
+            '/assets/projects/eoncord/chat-emoji.png',
+            '/assets/projects/eoncord/create-server.png',
+            '/assets/projects/eoncord/login.png',
+            '/assets/projects/eoncord/register.png'
+        ]
     },
     {
         id: 'fraudshield',
@@ -21,7 +28,14 @@ export const projects = [
         github: 'https://github.com/S-Eshwar-fut-dev',
         caseStudy: '#',
         video: '/assets/projects/fraudshield-preview.mp4',
-        image: '/assets/projects/fraudshield-thumb.jpg'
+        image: '/assets/projects/fraudshield/dashboard.png',
+        images: [
+            '/assets/projects/fraudshield/dashboard.png',
+            '/assets/projects/fraudshield/analysis.png',
+            '/assets/projects/fraudshield/metrics.png',
+            '/assets/projects/fraudshield/simulator.png',
+            '/assets/projects/fraudshield/roi.png'
+        ]
     },
     {
         id: 'projecteon',
@@ -33,11 +47,31 @@ export const projects = [
         github: 'https://github.com/S-Eshwar-fut-dev',
         demo: '#',
         video: '/assets/projects/projecteon-preview.mp4',
-        image: '/assets/projects/projecteon-thumb.jpg'
+        image: '/assets/projects/projecteon/chat-active.png',
+        images: [
+            '/assets/projects/projecteon/chat-active.png',
+            '/assets/projects/projecteon/chat-empty.png'
+        ]
+    },
+    {
+        id: 'course-dashboard',
+        title: 'Curriculum Management System',
+        subtitle: 'Enterprise Dashboard for CIT',
+        description: 'Led team of 10 to build role-based system. 4 PostgreSQL databases powering real-time analytics.',
+        tech: ['React', 'Node.js', 'PostgreSQL', 'Express'],
+        metrics: ['50% Less Manual Work', '35% Less Overhead'],
+        github: 'https://github.com/S-Eshwar-fut-dev',
+        video: '/assets/projects/course-preview.mp4',
+        image: '/assets/projects/cms/thumbnail.png',
+        images: [
+            '/assets/projects/cms/thumbnail.png',
+            '/assets/projects/cms/dashboard.png',
+            '/assets/projects/cms/features.png'
+        ]
     },
     {
         id: 'finance-app',
-        title: 'FinanceFlow',
+        title: 'Finsmart',
         subtitle: 'Personal Financial Management',
         description: 'Comprehensive financial tracking with predictive budgeting and investment portfolio analysis.',
         tech: ['Next.js', 'Supabase', 'Recharts', 'Tailwind'],
@@ -45,7 +79,13 @@ export const projects = [
         github: 'https://github.com/S-Eshwar-fut-dev',
         demo: '#',
         video: '/assets/projects/finance-preview.mp4',
-        image: '/assets/projects/finance-thumb.jpg'
+        image: '/assets/projects/finsmart/1.png',
+        images: [
+            '/assets/projects/finsmart/1.png',
+            '/assets/projects/finsmart/2.png',
+            '/assets/projects/finsmart/3.png',
+            '/assets/projects/finsmart/4.png'
+        ]
     },
     {
         id: 'twin-nebula',
@@ -57,18 +97,31 @@ export const projects = [
         github: 'https://github.com/S-Eshwar-fut-dev',
         demo: '#',
         video: '/assets/projects/portfolio-preview.mp4',
-        image: '/assets/projects/portfolio-thumb.jpg'
+        image: '/assets/projects/portfolio/hero.png',
+        images: [
+            '/assets/projects/portfolio/hero.png',
+            '/assets/projects/portfolio/main.png',
+            '/assets/projects/portfolio/gallery-1.png',
+            '/assets/projects/portfolio/gallery-2.png',
+            '/assets/projects/portfolio/gallery-3.png',
+            '/assets/projects/portfolio/gallery-4.png'
+        ]
     },
     {
-        id: 'course-dashboard',
-        title: 'Course Change Automation',
-        subtitle: 'Enterprise Dashboard for CIT',
-        description: 'Led team of 10 to build role-based system. 4 PostgreSQL databases powering real-time analytics.',
-        tech: ['React', 'Node.js', 'PostgreSQL', 'Express'],
-        metrics: ['50% Less Manual Work', '35% Less Overhead'],
-        github: 'https://github.com/S-Eshwar-fut-dev',
-        video: '/assets/projects/course-preview.mp4',
-        image: '/assets/projects/course-thumb.jpg'
+        id: 'eon-automator',
+        title: 'EON Automator',
+        subtitle: 'AI-Powered Workflow Automation',
+        description: 'Autonomous agent execution environment with real-time visual debugging, intent parsing, and history tracking.',
+        tech: ['React', 'TypeScript', 'AI', 'Automation'],
+        metrics: ['Autonomous Execution', 'Visual Debugging'],
+        demo: 'https://juwarz465rvjxm2leaqj.share.dreamflow.app/',
+        image: '/assets/projects/eon/automation-steps.png',
+        images: [
+            '/assets/projects/eon/automation-steps.png',
+            '/assets/projects/eon/inspector.png',
+            '/assets/projects/eon/execution-history.png',
+            '/assets/projects/eon/json-intent.png'
+        ]
     }
 ]
 
