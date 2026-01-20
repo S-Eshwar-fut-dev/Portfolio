@@ -1,7 +1,7 @@
 'use client'
 
 import { motion, AnimatePresence } from 'framer-motion'
-import { X, Github, Linkedin, Mail } from 'lucide-react'
+import { X } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
@@ -19,11 +19,6 @@ const navLinks = [
     { name: 'Contact', href: '#contact' }
 ]
 
-const socialLinks = [
-    { icon: Github, href: 'https://github.com/S-Eshwar-fut-dev', label: 'GitHub' },
-    { icon: Linkedin, href: 'https://linkedin.com/in/eshwar-s', label: 'LinkedIn' },
-    { icon: Mail, href: 'mailto:eshwar.s@example.com', label: 'Email' }
-]
 
 export default function NavigationOverlay({ isOpen, onClose }: NavigationOverlayProps) {
     const pathname = usePathname()

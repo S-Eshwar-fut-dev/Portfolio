@@ -61,7 +61,7 @@ export default function MagneticButton({
         x: 0,
         y: 0,
         duration: 0.5,
-        ease: "elastic.out(1, 0.3)",
+        ease: "elastic.out(1, 0.4)",
       });
     }
   };
