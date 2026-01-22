@@ -6,84 +6,95 @@ import * as THREE from 'three'
 
 const vertexShader = `
 uniform float uTime;
-uniform float uSpeed;
+attribute vec3 aOffset;
+attribute float aSpeed;
+attribute float aSize;
+
+varying vec2 vUv;
 
 void main() {
-    vec3 p = position;
-    
-    // Individual particle drift logic
-    // We use modulo to wrap particles back to the start individually
-    // Range -100 to 100 on Z axis
-    float drift = uTime * uSpeed;
-    p.z = mod(p.z + drift + 100.0, 200.0) - 100.0;
+    vUv = uv;
 
-    vec4 mvPosition = modelViewMatrix * vec4(p, 1.0);
+    vec3 pos = aOffset;
     
-    // Size attenuation (stars get bigger as they get closer)
-    gl_PointSize = 1.5 * (300.0 / -mvPosition.z);
+    // Z-axis drift logic (Moved to Vertex Shader)
+    // Wrap particles in Z space
+    float drift = uTime * aSpeed;
+    pos.z = mod(pos.z + drift + 100.0, 200.0) - 100.0;
+
+    // Billboarding Magic
+    // 1. Get the position of the instance center in View Space
+    vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
+    
+    // 2. Apply the vertex offset (the plane's corners) directly in View Space
+    // This effectively makes the plane always face the camera (billboarding)
+    mvPosition.xyz += position * aSize;
+
     gl_Position = projectionMatrix * mvPosition;
 }
 `
 
 const fragmentShader = `
+varying vec2 vUv;
+
 void main() {
-    // Simple circular particle
-    float r = distance(gl_PointCoord, vec2(0.5));
-    if (r > 0.5) discard;
+    // Circular particle shape
+    float dist = distance(vUv, vec2(0.5));
+    if (dist > 0.5) discard;
     
-    // Pure white, slight transparency
-    gl_FragColor = vec4(1.0, 1.0, 1.0, 0.7);
+    // Soft glow edge
+    float alpha = 1.0 - smoothstep(0.3, 0.5, dist);
+
+    gl_FragColor = vec4(1.0, 1.0, 1.0, alpha * 0.8);
 }
 `
 
 export default function ParticleStarfield() {
-    const mesh = useRef<THREE.Points>(null!)
+    const meshRef = useRef<THREE.InstancedMesh>(null!)
+    const count = 15000 // Maintaining high density
 
-    // Generate star positions
-    const particles = useMemo(() => {
-        const count = 15000 // High density for desktop
-        const positions = new Float32Array(count * 3)
+    const { offsets, speeds, sizes } = useMemo(() => {
+        const offsets = new Float32Array(count * 3)
+        const speeds = new Float32Array(count)
+        const sizes = new Float32Array(count)
 
         for (let i = 0; i < count; i++) {
-            // Random distribution in a large box
-            positions[i * 3] = (Math.random() - 0.5) * 200 // x
-            positions[i * 3 + 1] = (Math.random() - 0.5) * 200 // y
-            positions[i * 3 + 2] = (Math.random() - 0.5) * 200 // z
+            offsets[i * 3] = (Math.random() - 0.5) * 200 // x
+            offsets[i * 3 + 1] = (Math.random() - 0.5) * 200 // y
+            offsets[i * 3 + 2] = (Math.random() - 0.5) * 200 // z
+
+            speeds[i] = 2.0 + Math.random() * 3.0 // Random drift speeds
+            sizes[i] = 0.2 + Math.random() * 0.8 // Varied star sizes
         }
 
-        return positions
+        return { offsets, speeds, sizes }
     }, [])
 
     const uniforms = useMemo(() => ({
-        uTime: { value: 0 },
-        uSpeed: { value: 5.0 } // Drift speed
+        uTime: { value: 0 }
     }), [])
 
     useFrame((state) => {
-        if (mesh.current) {
-            // Update the time uniform for the drift
-            (mesh.current.material as THREE.ShaderMaterial).uniforms.uTime.value = state.clock.getElapsedTime()
-
-            // Keep the very slow rotation for that "Massive Universe" feel
-            mesh.current.rotation.y += 0.0002
+        if (meshRef.current && meshRef.current.material) {
+            (meshRef.current.material as THREE.ShaderMaterial).uniforms.uTime.value = state.clock.getElapsedTime()
         }
     })
 
     return (
-        <points ref={mesh}>
-            <bufferGeometry>
-                <bufferAttribute
-                    attach="attributes-position"
-                    args={[particles, 3]}
-                />
-            </bufferGeometry>
+        <instancedMesh ref={meshRef} args={[undefined, undefined, count]} frustumCulled={false}>
+            <planeGeometry args={[1, 1]}>
+                <instancedBufferAttribute attach="attributes-aOffset" args={[offsets, 3]} />
+                <instancedBufferAttribute attach="attributes-aSpeed" args={[speeds, 1]} />
+                <instancedBufferAttribute attach="attributes-aSize" args={[sizes, 1]} />
+            </planeGeometry>
             <shaderMaterial
-                transparent
-                depthWrite={false}
                 uniforms={uniforms}
                 vertexShader={vertexShader}
                 fragmentShader={fragmentShader}
+                transparent
+                depthWrite={false}
+                blending={THREE.AdditiveBlending}
             />
-        </points>
+        </instancedMesh>
     )
 }

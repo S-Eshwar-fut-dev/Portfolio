@@ -28,7 +28,7 @@ export default function Footer() {
               ESHWAR S
             </h2>
             <p className="text-slate-400 text-sm leading-relaxed">
-              Building scalable systems that blur the line between code and art.
+              Building AI/full stack Distributive Scalable Systems.
             </p>
             <div className="flex gap-4 pt-2">
               {/* Mini Socials */}

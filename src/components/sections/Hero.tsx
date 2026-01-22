@@ -80,7 +80,7 @@ export default function Hero() {
           transition={{ duration: 0.8, delay: 1 }}
           className="max-w-2xl text-[#1a0b2e] text-lg md:text-xl mb-12 leading-relaxed font-medium"
         >
-          Building scalable systems that blur the line between code and art.
+          Building AI/full stack Distributive Scalable Systems.
         </motion.p>
 
         {/* Buttons */}
