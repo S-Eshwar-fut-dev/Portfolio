@@ -1,6 +1,7 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { memo, useRef, useEffect } from 'react'
+import { motion, useInView, useSpring, useMotionValue } from 'framer-motion'
 import { Trophy, Crown, Award, Brain } from 'lucide-react'
 import GlassCard from '@/components/ui/GlassCard'
 
@@ -37,6 +38,49 @@ const achievements = [
     }
 ]
 
+const AchievementCard = memo(({ item }: { item: typeof achievements[0] }) => (
+    <GlassCard
+        className="p-6 flex flex-col items-center text-center justify-center gap-4 group"
+    >
+        <div className={`p-4 rounded-full bg-slate-900/50 ${item.color} group-hover:scale-110 transition-transform duration-300`}>
+            <item.icon size={32} />
+        </div>
+        <div>
+            <h3 className="font-bold text-lg text-white mb-1 group-hover:text-blue-400 transition-colors">
+                {item.title}
+            </h3>
+            <p className="text-sm text-slate-400">
+                {item.subtitle}
+            </p>
+        </div>
+    </GlassCard>
+))
+AchievementCard.displayName = 'AchievementCard'
+
+
+function Counter({ value, suffix }: { value: number, suffix: string }) {
+    const ref = useRef<HTMLSpanElement>(null)
+    const motionValue = useMotionValue(0)
+    const springValue = useSpring(motionValue, { damping: 100, stiffness: 100 })
+    const isInView = useInView(ref, { once: true, margin: "-100px" })
+
+    useEffect(() => {
+        if (isInView) {
+            motionValue.set(value)
+        }
+    }, [motionValue, isInView, value])
+
+    useEffect(() => {
+        springValue.on("change", (latest) => {
+            if (ref.current) {
+                ref.current.textContent = Math.floor(latest) + suffix
+            }
+        })
+    }, [springValue, suffix])
+
+    return <span ref={ref} className="text-3xl font-bold text-white" />
+}
+
 export default function About() {
     return (
         <section id="about" className="relative py-32 min-h-screen flex items-center">
@@ -56,19 +100,17 @@ export default function About() {
 
                         <div className="space-y-6 text-lg text-slate-300 leading-relaxed font-light">
                             <p>
-                                I'm Eshwar, a Full Stack Sorcerer who blends systems engineering with
-                                creative computation. Currently studying at Chennai Institute of Technology
-                                (2027), I specialize in building scalable, high-performance applications
-                                that don't just work—they mesmerize.
+                                I architect digital realities where <span className="text-cyan-400 font-semibold">15,000 stars compute at 60fps</span>.
+                                Currently studying at Chennai Institute of Technology (2027), I don't just build applications; I engineer experiences that bridge the gap between silicon and soul.
                             </p>
                             <p>
-                                From architecting microservices for distributed Discord clones to training
-                                CNNs for fraud detection, I push the boundaries of what's possible in the
-                                browser and beyond.
+                                <span className="text-purple-400 font-semibold">The Challenge:</span> Transforming complex distributed systems and heavy AI models into fluid, accessible interfaces.
                             </p>
                             <p>
-                                As a LeetCode Knight (Top 5% Global) and Salesforce Certified Developer,
-                                I bring algorithmic thinking and enterprise-grade engineering to every project.
+                                <span className="text-green-400 font-semibold">The Solution:</span> From microservices handling massive concurrency in Discord clones to reducing fraud by 88% with XGBoost pipelines, I forge solutions that are as robust as they are beautiful.
+                            </p>
+                            <p>
+                                As a <span className="bg-gradient-to-r from-yellow-400 to-amber-600 bg-clip-text text-transparent font-bold">LeetCode Knight (Top 5%)</span>, I bring algorithmic precision to every pixel.
                             </p>
                         </div>
 
@@ -76,7 +118,7 @@ export default function About() {
                         <div className="flex gap-8 mt-10">
                             {stats.map((stat, index) => (
                                 <div key={index} className="flex flex-col">
-                                    <span className="text-3xl font-bold text-white">{stat.value}</span>
+                                    <Counter value={parseInt(stat.value.replace(/\D/g, ''))} suffix={stat.value.replace(/[0-9]/g, '')} />
                                     <span className="text-sm text-slate-500 uppercase tracking-wider">{stat.label}</span>
                                 </div>
                             ))}
@@ -86,22 +128,7 @@ export default function About() {
                     {/* Right Column: Bento Grid */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         {achievements.map((item, index) => (
-                            <GlassCard
-                                key={index}
-                                className="p-6 flex flex-col items-center text-center justify-center gap-4 group"
-                            >
-                                <div className={`p-4 rounded-full bg-slate-900/50 ${item.color} group-hover:scale-110 transition-transform duration-300`}>
-                                    <item.icon size={32} />
-                                </div>
-                                <div>
-                                    <h3 className="font-bold text-lg text-white mb-1 group-hover:text-blue-400 transition-colors">
-                                        {item.title}
-                                    </h3>
-                                    <p className="text-sm text-slate-400">
-                                        {item.subtitle}
-                                    </p>
-                                </div>
-                            </GlassCard>
+                            <AchievementCard key={index} item={item} />
                         ))}
                     </div>
 

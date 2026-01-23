@@ -22,7 +22,8 @@ export default function LenisScroll({ children }: LenisScrollProps) {
             lenis.raf(time * 1000)
         })
 
-        gsap.ticker.lagSmoothing(0)
+        // Optimized lag smoothing for smoother recovery from heavy frames
+        gsap.ticker.lagSmoothing(1000, 16)
 
         function raf(time: number) {
             lenis.raf(time)

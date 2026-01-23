@@ -22,49 +22,30 @@ export default function Projects() {
                     viewport={{ once: true }}
                     className="mb-20"
                 >
-                    <h2 className="text-5xl md:text-6xl font-black mb-6 text-transparent bg-clip-text bg-gradient-to-r from-[#a78bfa] via-[#818cf8] to-[#f472b6] drop-shadow-[0_0_10px_rgba(167,139,250,0.5)]">Featured Work</h2>
+                    <h2 className="text-6xl md:text-8xl font-black mb-8 text-transparent bg-clip-text bg-gradient-to-r from-[#a78bfa] via-[#818cf8] to-[#f472b6] drop-shadow-[0_0_15px_rgba(167,139,250,0.4)] tracking-tighter">Featured Work</h2>
                     <p className="text-xl text-slate-400 max-w-2xl">
                         Building products that scale and solutions that matter.
                         From AI fraud detection to distributed systems.
                     </p>
                 </motion.div>
 
-                <div className="grid grid-cols-1 md:grid-cols-12 gap-6 auto-rows-[minmax(300px,auto)]">
-                    {projects.map((project, index) => {
-                        // Custom Grid Logic - Row by Row Control
-                        // Row 1: Eoncord (Index 0) -> Full Width
-                        // Row 2: FraudShield (1) & ProjectEon (2) -> Half Width
-                        // Row 3: CMS (Index 3) -> Full Width
-                        // Row 4: Finsmart (4) & Twin Nebula (5) -> Half Width
-                        // Row 5: EON Automator (6) -> Full Width
-
-                        let gridClass = ""
-
-                        if (index === 0) gridClass = "md:col-span-12 min-h-[500px]" // Eoncord
-                        else if (index === 1 || index === 2) gridClass = "md:col-span-6 min-h-[400px]" // FraudShield & ProjectEon
-                        else if (index === 3) gridClass = "md:col-span-12 min-h-[500px]" // CMS
-                        else if (index === 4) gridClass = "md:col-span-5 min-h-[300px]" // Finsmart (Narrower)
-                        else if (index === 5) gridClass = "md:col-span-7 min-h-[300px]" // Twin Nebula (Wider)
-                        else if (index === 6) gridClass = "md:col-span-12 min-h-[500px]" // EON Automator
-                        else gridClass = "md:col-span-6 min-h-[400px]" // Fallback
-
-                        return (
-                            <div
-                                key={project.id}
-                                onClick={() => {
-                                    setSelectedProject(project)
-                                    setCurrentImageIndex(0)
-                                }}
-                                className={`cursor-pointer ${gridClass}`}
-                            >
-                                <ProjectCard
-                                    project={project}
-                                    index={index}
-                                    className="h-full"
-                                />
-                            </div>
-                        )
-                    })}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    {projects.map((project, index) => (
+                        <div
+                            key={project.id}
+                            onClick={() => {
+                                setSelectedProject(project)
+                                setCurrentImageIndex(0)
+                            }}
+                            className="cursor-pointer h-full"
+                        >
+                            <ProjectCard
+                                project={project}
+                                index={index}
+                                className="h-full"
+                            />
+                        </div>
+                    ))}
                 </div>
 
             </div>
@@ -107,6 +88,7 @@ export default function Projects() {
                                         src={selectedProject.images ? selectedProject.images[currentImageIndex] : selectedProject.image}
                                         alt={selectedProject.title}
                                         fill
+                                        sizes="(max-width: 768px) 100vw, 60vw"
                                         className="object-contain transition-opacity duration-500"
                                     />
                                 </div>

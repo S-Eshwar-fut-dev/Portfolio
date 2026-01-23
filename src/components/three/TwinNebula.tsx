@@ -219,11 +219,24 @@ export default function TwinNebula() {
         []
     )
 
-    useFrame((state) => {
+    // ... imports
+
+    useFrame((state, delta) => {
+        // Throttling to ~30fps for the heavy noise calculations
+        // This accumulator logic can be refined, but for now we'll just rely on the reduced geometry 
+        // and efficient shader usage. To strictly throttle 30fps:
+        // accumulatedTime += delta
+        // if (accumulatedTime < 1/30) return
+        // accumulatedTime = 0
+
+        // However, linear interpolation looks smoother. 
+        // Let's stick to full frame updates but with reduced geometry first.
+
         material.uniforms.uTime.value = state.clock.elapsedTime
+
         // Slowly rotate the whole nebula
         if (meshRef.current) {
-            meshRef.current.rotation.z = Math.sin(state.clock.elapsedTime * 0.1) * 0.2 // Tilt
+            meshRef.current.rotation.z = Math.sin(state.clock.elapsedTime * 0.1) * 0.2
         }
     })
 
@@ -232,9 +245,11 @@ export default function TwinNebula() {
             <mesh ref={meshRef}>
                 {/* Huge sphere deformed into hourglass */}
                 {/* Reduced radius to 4.5 for proper scale */}
-                <sphereGeometry args={[4.5, 192, 192]} />
+                {/* OPTIMIZATION: Reduced segments from 192 -> 96 for mobile performance */}
+                <sphereGeometry args={[4.5, 96, 96]} />
                 <primitive object={material} attach="material" />
             </mesh>
+// ... rest of component
 
             {/* Intense Core Light - Hidden sphere, just light */}
             <pointLight position={[0, 0, 0]} intensity={3.0} color="#ffffff" distance={25} decay={2.2} />

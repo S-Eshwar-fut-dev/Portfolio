@@ -2,6 +2,7 @@
 
 import { useRef, useState } from 'react'
 import { motion } from 'framer-motion'
+import Image from 'next/image'
 import { Github, ExternalLink, Play } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
@@ -45,30 +46,30 @@ export default function ProjectCard({ project, index, featured = false, classNam
     return (
         <motion.div
             className={cn(
-                "group relative rounded-3xl overflow-hidden bg-black border border-white/10 shadow-lg flex flex-col",
+                "group relative rounded-3xl overflow-hidden bg-black border border-white/10 shadow-lg flex flex-col hover:shadow-[0_0_30px_rgba(6,182,212,0.15)] transition-shadow duration-500",
                 className
             )}
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
+            whileHover={{ y: -10 }}
             transition={{ duration: 0.5, delay: index * 0.1 }}
             viewport={{ once: true, margin: "-100px" }}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
         >
             {/* Image Section (Top) */}
-            <div className="relative flex-grow min-h-[50%] overflow-hidden bg-black flex items-center justify-center">
-                <div className="relative w-full h-full">
-                    {/* Using img for simplicity with dynamic paths, allow full view */}
-                    <img
-                        src={project.image || '/assets/projects/placeholder.jpg'}
-                        alt={project.title}
-                        className="w-full h-full object-contain transition-transform duration-700 group-hover:scale-105"
-                    />
-                </div>
+            <div className="relative w-full aspect-video bg-black/50">
+                <Image
+                    src={project.image || '/assets/projects/placeholder.jpg'}
+                    alt={project.title}
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                />
             </div>
 
             {/* Content Section (Bottom) */}
-            <div className="relative z-10 p-6 md:p-8 bg-[#0a1628] border-t border-white/10 flex flex-col justify-between min-h-[40%]">
+            <div className="relative z-10 p-6 md:p-8 bg-[#0a1628] flex flex-col justify-between flex-grow">
                 <div>
                     {/* Tech Tags */}
                     <div className="flex flex-wrap gap-2 mb-3">
