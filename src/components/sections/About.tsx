@@ -1,14 +1,15 @@
 'use client'
 
-import { memo, useRef, useEffect } from 'react'
-import { motion, useInView, useSpring, useMotionValue } from 'framer-motion'
+import { memo } from 'react'
+import { motion } from 'framer-motion'
 import { Trophy, Crown, Award, Brain } from 'lucide-react'
 import GlassCard from '@/components/ui/GlassCard'
 
 const stats = [
     { label: 'CGPA', value: '9.0/10' },
-    { label: 'LeetCode', value: '2000+' },
-    { label: 'Team Size', value: '10+' }
+    { label: 'LeetCode Rating', value: '2110+' },
+    { label: 'Global Rank', value: 'Top 1.44%' },
+    { label: 'Projects', value: '25+' }
 ]
 
 const achievements = [
@@ -58,29 +59,6 @@ const AchievementCard = memo(({ item }: { item: typeof achievements[0] }) => (
 AchievementCard.displayName = 'AchievementCard'
 
 
-function Counter({ value, suffix }: { value: number, suffix: string }) {
-    const ref = useRef<HTMLSpanElement>(null)
-    const motionValue = useMotionValue(0)
-    const springValue = useSpring(motionValue, { damping: 100, stiffness: 100 })
-    const isInView = useInView(ref, { once: true, margin: "-100px" })
-
-    useEffect(() => {
-        if (isInView) {
-            motionValue.set(value)
-        }
-    }, [motionValue, isInView, value])
-
-    useEffect(() => {
-        springValue.on("change", (latest) => {
-            if (ref.current) {
-                ref.current.textContent = Math.floor(latest) + suffix
-            }
-        })
-    }, [springValue, suffix])
-
-    return <span ref={ref} className="text-3xl font-bold text-white" />
-}
-
 export default function About() {
     return (
         <section id="about" className="relative py-32 min-h-screen flex items-center">
@@ -100,17 +78,17 @@ export default function About() {
 
                         <div className="space-y-6 text-lg text-slate-300 leading-relaxed font-light">
                             <p>
-                                I architect digital realities where <span className="text-cyan-400 font-semibold">15,000 stars compute at 60fps</span>.
-                                Currently studying at Chennai Institute of Technology (2027), I don't just build applications; I engineer experiences that bridge the gap between silicon and soul.
+                                I architect scalable distributed systems and AI solutions at the intersection of performance and reliability.
+                                Currently pursuing B.Tech at Chennai Institute of Technology (CGPA: 9.0/10), I specialize in building fault-tolerant microservices and high-performance computing systems.
                             </p>
                             <p>
-                                <span className="text-purple-400 font-semibold">The Challenge:</span> Transforming complex distributed systems and heavy AI models into fluid, accessible interfaces.
+                                <span className="text-purple-400 font-semibold">The Challenge:</span> Transforming complex distributed architectures and compute-intensive algorithms into reliable, production-ready systems that handle real-world scale.
                             </p>
                             <p>
-                                <span className="text-green-400 font-semibold">The Solution:</span> From microservices handling massive concurrency in Discord clones to reducing fraud by 88% with XGBoost pipelines, I forge solutions that are as robust as they are beautiful.
+                                <span className="text-green-400 font-semibold">The Solution:</span> From microservices with circuit breaking on Kubernetes to customized memory allocators reducing TLB misses by 35%, I engineer solutions that are robust, performant, and maintainable.
                             </p>
                             <p>
-                                As a <span className="bg-gradient-to-r from-yellow-400 to-amber-600 bg-clip-text text-transparent font-bold">LeetCode Knight (Top 5%)</span>, I bring algorithmic precision to every pixel.
+                                My journey spans from achieving <span className="text-cyan-400 font-semibold">42 GFLOPS</span> throughput in parallel matrix operations to architecting distributed platforms handling 100+ concurrent users.
                             </p>
                         </div>
 
@@ -118,7 +96,7 @@ export default function About() {
                         <div className="flex gap-8 mt-10">
                             {stats.map((stat, index) => (
                                 <div key={index} className="flex flex-col">
-                                    <Counter value={parseInt(stat.value.replace(/\D/g, ''))} suffix={stat.value.replace(/[0-9]/g, '')} />
+                                    <span className="text-3xl font-bold gradient-text">{stat.value}</span>
                                     <span className="text-sm text-slate-500 uppercase tracking-wider">{stat.label}</span>
                                 </div>
                             ))}

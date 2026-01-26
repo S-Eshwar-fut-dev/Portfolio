@@ -54,15 +54,13 @@ export default function Hero() {
               sequence={[
                 "Full Stack Developer",
                 2000,
+                "Distributed Systems Architect",
+                2000,
                 "Knight @LeetCode",
                 2000,
                 "AI/ML Enthusiast",
                 2000,
-                "Devops Developer",
-                2000,
-                "Microservices",
-                2000,
-                "High Parallel Computing",
+                "High Performance Computing",
                 2000,
               ]}
               wrapper="span"
@@ -80,7 +78,7 @@ export default function Hero() {
           transition={{ duration: 0.8, delay: 1 }}
           className="max-w-2xl text-[#1a0b2e] text-lg md:text-xl mb-12 leading-relaxed font-medium"
         >
-          Building AI/full stack Distributive Scalable Systems.
+          Building high-performance distributed systems and AI-powered applications that scale.
         </motion.p>
 
         {/* Buttons */}

@@ -66,8 +66,8 @@ export default function Footer() {
             <ul className="space-y-3 text-slate-400 text-sm">
               <li>
                 <a
-                  href="mailto:eshwars.dev@gmail.com"
-                  className="hover:text-cyan-400 transition-colors flex items-center gap-2"
+                  href="mailto:eshwar0211@gmail.com"
+                  className="text-slate-400 hover:text-cyan-400 transition-colors flex items-center gap-2"
                 >
                   <Mail size={15} /> eshwar0211@gmail.com
                 </a>

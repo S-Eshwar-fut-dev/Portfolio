@@ -6,21 +6,21 @@ import { Briefcase, Code } from "lucide-react";
 const experiences = [
   {
     id: 1,
-    title: "Web Developer Intern",
+    title: "Web Development Intern",
     company: "Gaotek Inc",
-    period: "Internship",
+    period: "June 2024 – September 2024",
     description:
-      "Engineered and deployed 25+ e-commerce product modules integrated with a hardware-level RFID tracking system, achieving real-time inventory synchronization and a 40% reduction in stock discrepancy.",
+      "Engineered and deployed 25+ e-commerce product modules integrated with hardware-level RFID tracking, achieving real-time synchronization and 40% reduction in stock discrepancy. Optimized distributed transaction validation logic, improving payment success rates by 65%.",
     icon: Briefcase,
     side: "left",
   },
   {
     id: 2,
-    title: "Full Stack Lead",
+    title: "Full Stack Lead (Student)",
     company: "Chennai Institute of Technology",
-    period: "Leadership",
+    period: "Nov 2024 – Feb 2025",
     description:
-      "Led team of 10 developers to build role-based access control (RBAC) web dashboard automating course-change request workflows, replacing manual Excel processes and reducing administrative processing time by 50% Reduced administrative overhead by 35% and enhanced compliance in role-based access.",
+      "Led team of 10 to build enterprise RBAC dashboard, reducing admin processing time by 50% across 450+ requests/semester. Designed PostgreSQL architecture with 4 normalized databases and implemented RLS for department-specific data isolation.",
     icon: Code,
     side: "right",
   },
@@ -54,9 +54,8 @@ export default function Experience() {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true, margin: "-100px" }}
                 transition={{ duration: 0.6, delay: index * 0.2 }}
-                className={`flex flex-col md:flex-row items-center justify-between ${
-                  exp.side === "right" ? "md:flex-row-reverse" : ""
-                }`}
+                className={`flex flex-col md:flex-row items-center justify-between ${exp.side === "right" ? "md:flex-row-reverse" : ""
+                  }`}
               >
                 {/* Content Card */}
                 <div className="w-full md:w-[48%] mb-8 md:mb-0">

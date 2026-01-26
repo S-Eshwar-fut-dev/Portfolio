@@ -11,6 +11,7 @@ interface ProjectProps {
         id: string
         title: string
         subtitle: string
+        shortDescription?: string
         description: string
         tech: string[]
         metrics?: string[]
@@ -84,7 +85,7 @@ export default function ProjectCard({ project, index, featured = false, classNam
                     <p className="text-cyan-400 font-medium text-sm mb-3">{project.subtitle}</p>
 
                     <p className="text-slate-400 text-sm line-clamp-2 mb-4">
-                        {project.description}
+                        {project.shortDescription || project.description}
                     </p>
                 </div>
 
