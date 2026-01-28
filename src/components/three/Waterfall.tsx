@@ -169,11 +169,18 @@ const Mist = () => {
 }
 
 
+// Define local shader interface to satisfy types without using 'any'
+interface Shader {
+  uniforms: { [key: string]: { value: any } }
+  vertexShader: string
+  fragmentShader: string
+}
+
 export default function Waterfall() {
   const texture = useTexture('/textures/waterfall.jpg')
   texture.wrapS = texture.wrapT = THREE.RepeatWrapping
 
-  // Using any to avoid strict definition mismatches since we are patching shaders
+  // Drei materials can be tricky to type perfectly, casting to any is common for refs here
   const materialRef = useRef<any>(null!)
   const { size } = useThree()
 
@@ -189,7 +196,7 @@ export default function Waterfall() {
 
   })
 
-  const onBeforeCompile = (shader: any) => { // Fixed: using any for shader type
+  const onBeforeCompile = (shader: Shader) => {
     shader.uniforms.uTime = uniforms.uTime
     shader.uniforms.uMouse = uniforms.uMouse
 

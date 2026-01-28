@@ -85,7 +85,7 @@ export default function Projects() {
                             <div className="relative w-full md:w-3/5 h-[300px] md:h-auto bg-[#020617] group flex items-center justify-center p-4">
                                 <div className="relative w-full h-full">
                                     <Image
-                                        src={selectedProject.images ? selectedProject.images[currentImageIndex] : selectedProject.image}
+                                        src={selectedProject.images ? selectedProject.images[currentImageIndex] : (selectedProject.image || '')}
                                         alt={selectedProject.title}
                                         fill
                                         sizes="(max-width: 768px) 100vw, 60vw"

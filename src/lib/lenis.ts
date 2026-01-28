@@ -1,4 +1,4 @@
-import Lenis from '@studio-freight/lenis'
+import Lenis from 'lenis'
 
 export const lenisOptions = {
     duration: 1.2,

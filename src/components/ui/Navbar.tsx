@@ -49,8 +49,8 @@ export default function Navbar() {
                             <span className="text-xl font-bold tracking-wide text-white group-hover:text-cyan-400 transition-colors">
                                 Eshwar S
                             </span>
-                            <span className="text-[10px] uppercase tracking-[0.2em] text-cyan-500/80 font-semibold">
-                                Full Mesh Sorcerer
+                            <span className="text-[12px] uppercase-text text-cyan-500/80 font-semibold">
+                                Distributed Systems Architect
                             </span>
                         </div>
                     </div>

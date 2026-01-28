@@ -40,12 +40,17 @@ export default function NavigationOverlay({
 
           {/* Drawer */}
           <motion.div
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="nav-title"
+            onKeyDown={(e) => e.key === 'Escape' && onClose()}
             initial={{ x: "100%" }}
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ type: "spring", damping: 25, stiffness: 200 }}
             className="border-radius fixed right-0 top-0 bottom-0 z-50 w-100 md:w-[600px] bg-[rgba(0,10,30,0.6)] border-l border-cyan-500/20 backdrop-blur-[30px] p-12 flex flex-col justify-start rounded-l-3xl shadow-2xl backdrop-saturate-150"
           >
+            <h2 id="nav-title" className="sr-only">Navigation Menu</h2>
             {/* Header */}
             <div className="flex justify-end items-center mb-12">
               <button

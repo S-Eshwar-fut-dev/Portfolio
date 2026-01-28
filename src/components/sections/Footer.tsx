@@ -8,6 +8,7 @@ import {
   Instagram,
   Mail,
   Heart,
+  Icon,
 } from "lucide-react";
 
 export default function Footer() {
@@ -32,13 +33,26 @@ export default function Footer() {
             </p>
             <div className="flex gap-4 pt-2">
               {/* Mini Socials */}
-              {[Github, Linkedin, Instagram].map((Icon, i) => (
-                <div
+              {[
+                { Icon: Github, href: "https://github.com/S-Eshwar-fut-dev" },
+                {
+                  Icon: Linkedin,
+                  href: "https://www.linkedin.com/in/eshwar-s-28a944290/",
+                },
+                {
+                  Icon: Instagram,
+                  href: "https://www.instagram.com/eshwarshanmuga/",
+                },
+              ].map(({ Icon, href }, i) => (
+                <a
                   key={i}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="p-2 rounded-full bg-white/5 hover:bg-white/10 text-slate-400 hover:text-cyan-400 transition-colors cursor-pointer"
                 >
                   <Icon size={18} />
-                </div>
+                </a>
               ))}
             </div>
           </div>

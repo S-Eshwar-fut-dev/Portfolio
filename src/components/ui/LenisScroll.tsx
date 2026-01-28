@@ -1,7 +1,8 @@
 'use client'
 
 import { ReactNode, useEffect } from 'react'
-import Lenis from '@studio-freight/lenis'
+import Lenis from 'lenis'
+import 'lenis/dist/lenis.css'
 import { lenisOptions } from '@/lib/lenis'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -25,16 +26,9 @@ export default function LenisScroll({ children }: LenisScrollProps) {
         // Optimized lag smoothing for smoother recovery from heavy frames
         gsap.ticker.lagSmoothing(1000, 16)
 
-        function raf(time: number) {
-            lenis.raf(time)
-            requestAnimationFrame(raf)
-        }
-
-        requestAnimationFrame(raf)
-
         return () => {
             lenis.destroy()
-            gsap.ticker.remove(lenis.raf)
+            gsap.ticker.remove((time) => lenis.raf(time * 1000))
         }
     }, [])
 

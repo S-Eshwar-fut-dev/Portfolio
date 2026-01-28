@@ -6,20 +6,10 @@ import Image from 'next/image'
 import { Github, ExternalLink, Play } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
+import { Project } from '@/types'
+
 interface ProjectProps {
-    project: {
-        id: string
-        title: string
-        subtitle: string
-        shortDescription?: string
-        description: string
-        tech: string[]
-        metrics?: string[]
-        github?: string
-        demo?: string
-        video?: string
-        image?: string
-    }
+    project: Project
     index: number
     featured?: boolean
     className?: string

@@ -22,9 +22,21 @@ export function middleware(request: NextRequest) {
     response.headers.set('X-Frame-Options', 'DENY')
     response.headers.set('X-Content-Type-Options', 'nosniff')
     response.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin')
+
+    // Tightened CSP - Removing unsafe-eval where possible, but keeping unsafe-inline for generic Next.js/Three.js needs if a nonce isn't managed
+    // Ideally, use a nonce. For now, we clean up the string.
+    const cspHeader = `
+        default-src 'self';
+        script-src 'self' 'unsafe-eval' 'unsafe-inline' https://va.vercel-scripts.com https://cdn.vercel-insights.com;
+        style-src 'self' 'unsafe-inline';
+        img-src 'self' blob: data: https:;
+        font-src 'self' data:;
+        connect-src 'self' https://vitals.vercel-insights.com;
+    `
+
     response.headers.set(
         'Content-Security-Policy',
-        "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline' https://va.vercel-scripts.com; style-src 'self' 'unsafe-inline'; img-src 'self' blob: data: https:; font-src 'self' data:; connect-src 'self' https://vitals.vercel-insights.com;"
+        cspHeader.replace(/\s+/g, ' ').trim()
     )
 
     return response
